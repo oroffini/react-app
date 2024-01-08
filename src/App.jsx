@@ -1,30 +1,54 @@
-/* import {useState} from 'react'; */
-import PropTypes from 'prop-types';
+import {Input} from "./components/forms/input.jsx";
+import {Checkbox} from "./components/forms/Checkbox.jsx";
 
-const todos = [
-    'Faire une todo list',
-    'Apprendre React',
-    'Devenir un développeur web'
-  ]
+
+const PRODUCTS = [
+  { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
+  { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
+  { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
+  { category: 'Electronics', price: '$99.99', stocked: true, name: 'Headphones' },
+  { category: 'Electronics', price: '$99.99', stocked: true, name: 'Headphones' },
+  { category: 'Clothing', price: '$29.99', stocked: true, name: 'T-Shirt' },
+]
 
 function App() {
+  return <div className="container">
+    <SearchBar />
+    <ProductTable products={PRODUCTS} />
+  </div>
 
+}
 
-    return <>
-      <Title>Bienvenue dans mon application React</Title>
-      <p>Je viens placer ici un paragraphe, pour gérer une zone de texte</p>
-      <ul>
-        {todos.map((todo, index) => <li key={index}>{todo}</li>)}
-      </ul>
-      </>
+function SearchBar () {
+  return <div>
+    <div className="mb-3">
+      <Input value="" onChange={() => null} placeholder="Rechercher..." />
+      <Checkbox id="stocked" checked={false} onChange={() => null} label="N'afficher que les produits en stock" />
+    </div>
+    </div>
+}
+
+function ProductTable ({products}) {
+  const rows = []
+  let lastCategory = null
+
+  for (let product of products) {
+    if (product.category !== lastCategory) {
+      rows.push(<ProductCategoryRow name={product.category} />)
+    }
   }
 
-
-function Title ({children}) {
-  return <h1>{children}</h1>
+  return <table className="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+      </tr>
+    </thead>
+    <tbody>
+      {products.map((product, index) => <ProductRow key={index} product={product} />)}
+    </tbody>
+  </table>
 }
-Title.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 export default App
