@@ -1,7 +1,6 @@
 import {Input} from "./components/forms/input.jsx";
 import {Checkbox} from "./components/forms/Checkbox.jsx";
 
-
 const PRODUCTS = [
   { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
   { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
@@ -34,8 +33,10 @@ function ProductTable ({products}) {
 
   for (let product of products) {
     if (product.category !== lastCategory) {
-      rows.push(<ProductCategoryRow name={product.category} />)
+      rows.push(<ProductCategoryRow key={product.category} name={product.category} />)
     }
+    lastCategory = product.category
+    rows.push(<ProductRow product={product} key={product.name} />)
   }
 
   return <table className="table">
@@ -46,7 +47,7 @@ function ProductTable ({products}) {
       </tr>
     </thead>
     <tbody>
-      {products.map((product, index) => <ProductRow key={index} product={product} />)}
+      {rows}
     </tbody>
   </table>
 }
