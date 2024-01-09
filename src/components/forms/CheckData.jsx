@@ -5,7 +5,7 @@
  * @param {string} id 
  */
 
-export function Checkbox ({label, checked, onChange, id}) {
+export function CheckData ({label, checked, onChange, id}) {
     return <div>
         <input 
         id={id}
